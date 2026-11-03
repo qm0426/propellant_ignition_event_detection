@@ -1,0 +1,11 @@
+{
+  "files": {
+    "basetrack.py": "305131ea660c3c535a1db101085317d981ab57b9db34a9055225385622c2be40",
+    "bbox_compat.py": "186d2870ac73a5ad169f850960108e746756e0385873a1ce89d106b3fe543a65",
+    "byte_tracker.py": "f2c687e540a0496e1317792cbd978cdd61ab8872a355be5808341cbecade7849",
+    "kalman_filter.py": "dc88e3b7c75131616e76ff6e5381239d618c8c07c81692002597416cbc24dce5",
+    "matching.py": "ec5b3f3c80143646b6cc9a7f534f7aa055f8e44e059d781d4f1bc1e3346ea8c3",
+    "compatibility_patch.json": "cc8f75df7f519f7cab3732f56d01fe2caf2289514801b1476ff4acd1c8298221"
+  },
+  "upstream_manifest": "revision_experiments_34569_20261018\\revision_external\\bytetrack\\upstream_manifest.json"
+}

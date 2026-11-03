@@ -1,0 +1,125 @@
+{
+  "output_dir": "outputs/review_suite",
+  "runs": [
+    {
+      "id": "criteria",
+      "family": "judges",
+      "config": "revision_configs/criteria.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "decision_features",
+      "family": "judges",
+      "config": "revision_configs/decision_features.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "assignment_native",
+      "family": "assignment",
+      "config": "revision_configs/assignment_native.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "factorial",
+      "family": "restoration",
+      "config": "revision_configs/factorial.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "factorial_dog",
+      "family": "restoration",
+      "config": "revision_configs/factorial_dog.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "sensitivity",
+      "family": "judges",
+      "config": "revision_configs/sensitivity.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "DET_COLD_RAW",
+      "family": "detection",
+      "config": "revision_configs/DET_COLD_RAW.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "DET_HOT_RAW",
+      "family": "detection",
+      "config": "revision_configs/DET_HOT_RAW.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "DET_BOTH_RAW",
+      "family": "detection",
+      "config": "revision_configs/DET_BOTH_RAW.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "DET_BOTH_CLEANED",
+      "family": "detection",
+      "config": "revision_configs/DET_BOTH_CLEANED.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "DET_LOG",
+      "family": "detection",
+      "config": "revision_configs/DET_LOG.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "DET_MSER",
+      "family": "detection",
+      "config": "revision_configs/DET_MSER.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "CLEAN_NO_BACKGROUND",
+      "family": "detection",
+      "config": "revision_configs/CLEAN_NO_BACKGROUND.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "CLEAN_NO_GEOMETRY",
+      "family": "detection",
+      "config": "revision_configs/CLEAN_NO_GEOMETRY.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "CLEAN_NO_DEFOCUS",
+      "family": "detection",
+      "config": "revision_configs/CLEAN_NO_DEFOCUS.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "CLEAN_NO_NESTED",
+      "family": "detection",
+      "config": "revision_configs/CLEAN_NO_NESTED.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "CLEAN_NO_DUPLICATES",
+      "family": "detection",
+      "config": "revision_configs/CLEAN_NO_DUPLICATES.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "CLEAN_NO_NMS",
+      "family": "detection",
+      "config": "revision_configs/CLEAN_NO_NMS.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "CLEAN_NO_ALL",
+      "family": "detection",
+      "config": "revision_configs/CLEAN_NO_ALL.review.template.json",
+      "enabled": true
+    },
+    {
+      "id": "CLEAN_WITH_DEFOCUS",
+      "family": "detection",
+      "config": "revision_configs/CLEAN_WITH_DEFOCUS.review.template.json",
+      "enabled": true
+    }
+  ]
+}

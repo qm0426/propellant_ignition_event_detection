@@ -1,0 +1,354 @@
+{
+  "output_dir": "revision_outputs/real_runs",
+  "synthetic": false,
+  "frames": "revision_inputs/frames.csv",
+  "candidates": "revision_inputs/raw_candidates.csv",
+  "evaluation": {
+    "iou_threshold": 0.5,
+    "mapping_max_distance": 30,
+    "mapping_min_shared_frames": 3,
+    "mapping_min_purity": 0.8,
+    "tolerances": [
+      1,
+      3,
+      5,
+      10
+    ],
+    "duration_s": null
+  },
+  "features": {
+    "difference_policy": "contiguous_zero_boundary",
+    "background_correction": true
+  },
+  "protocol_status": "draft_not_frozen",
+  "reference_boxes": "revision_inputs/reference_boxes.csv",
+  "reference_events": "revision_inputs/reference_events.csv",
+  "rois": "revision_inputs/rois.csv",
+  "labels": "revision_inputs/fixed_cohort_labels.csv",
+  "label_provenance": null,
+  "track_bundle_id": null,
+  "full_method": {
+    "method": "gmm",
+    "rtv": true,
+    "candidate_policy": "first_terminal"
+  },
+  "background_factor": {
+    "kind": "independent_columns",
+    "columns": [
+      "bg_med",
+      "bg_mad"
+    ]
+  },
+  "background_factor_status": "proposed_factor_needs_manuscript_definition_confirmation",
+  "seed": 2026,
+  "gmm_config": {
+    "random_state": 2026
+  },
+  "methods": {
+    "DEC_FULL": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal"
+    },
+    "DEC_NO_GEOM": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "gmm_overrides": {
+        "enable_shape_sequence_reject": false
+      }
+    },
+    "DEC_NO_INITIALHOT": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "gmm_overrides": {
+        "enable_initial_hot_reject": false
+      }
+    },
+    "DEC_NO_SMOOTH": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "gmm_overrides": {
+        "min_state_run": 1
+      }
+    },
+    "DEC_NO_PRIORCOLD": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "gmm_overrides": {
+        "require_all_prior_cold": false
+      }
+    },
+    "DEC_NO_RTV": {
+      "method": "gmm",
+      "rtv": false,
+      "candidate_policy": "first_terminal"
+    },
+    "FEAT_NO_DELTA": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "feature_columns": [
+        "gray_p95",
+        "gray_p99",
+        "corr_p95",
+        "corr_p99",
+        "corr_max",
+        "bright_energy_mean",
+        "bright_area_ratio",
+        "bright_mean",
+        "red_ratio",
+        "rg_ratio",
+        "hsv_v_p95",
+        "hsv_v_p99",
+        "largest_area_ratio"
+      ]
+    },
+    "FEAT_NO_COLOR": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "feature_columns": [
+        "gray_p95",
+        "gray_p99",
+        "corr_p95",
+        "corr_p99",
+        "corr_max",
+        "bright_energy_mean",
+        "bright_area_ratio",
+        "bright_mean",
+        "hsv_v_p95",
+        "hsv_v_p99",
+        "largest_area_ratio",
+        "d1_gray_p99",
+        "d1_corr_p99",
+        "d1_bright_energy_mean",
+        "d1_bright_area_ratio",
+        "d1_hsv_v_p99"
+      ]
+    },
+    "FEAT_NO_MORPH": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "feature_columns": [
+        "gray_p95",
+        "gray_p99",
+        "corr_p95",
+        "corr_p99",
+        "corr_max",
+        "bright_energy_mean",
+        "bright_area_ratio",
+        "bright_mean",
+        "red_ratio",
+        "rg_ratio",
+        "hsv_v_p95",
+        "hsv_v_p99",
+        "d1_gray_p99",
+        "d1_corr_p99",
+        "d1_bright_energy_mean",
+        "d1_bright_area_ratio",
+        "d1_red_ratio",
+        "d1_hsv_v_p99"
+      ]
+    },
+    "GEOM_0_BG_0": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "feature_columns": [
+        "gray_p95",
+        "gray_p99",
+        "corr_p95",
+        "corr_p99",
+        "corr_max",
+        "bright_energy_mean",
+        "bright_area_ratio",
+        "bright_mean",
+        "red_ratio",
+        "rg_ratio",
+        "hsv_v_p95",
+        "hsv_v_p99",
+        "largest_area_ratio",
+        "d1_gray_p99",
+        "d1_corr_p99",
+        "d1_bright_energy_mean",
+        "d1_bright_area_ratio",
+        "d1_red_ratio",
+        "d1_hsv_v_p99"
+      ],
+      "gmm_overrides": {
+        "enable_shape_sequence_reject": false
+      }
+    },
+    "GEOM_0_BG_1": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "feature_columns": [
+        "gray_p95",
+        "gray_p99",
+        "corr_p95",
+        "corr_p99",
+        "corr_max",
+        "bright_energy_mean",
+        "bright_area_ratio",
+        "bright_mean",
+        "red_ratio",
+        "rg_ratio",
+        "hsv_v_p95",
+        "hsv_v_p99",
+        "largest_area_ratio",
+        "d1_gray_p99",
+        "d1_corr_p99",
+        "d1_bright_energy_mean",
+        "d1_bright_area_ratio",
+        "d1_red_ratio",
+        "d1_hsv_v_p99",
+        "bg_med",
+        "bg_mad"
+      ],
+      "gmm_overrides": {
+        "enable_shape_sequence_reject": false
+      }
+    },
+    "GEOM_1_BG_0": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "feature_columns": [
+        "gray_p95",
+        "gray_p99",
+        "corr_p95",
+        "corr_p99",
+        "corr_max",
+        "bright_energy_mean",
+        "bright_area_ratio",
+        "bright_mean",
+        "red_ratio",
+        "rg_ratio",
+        "hsv_v_p95",
+        "hsv_v_p99",
+        "largest_area_ratio",
+        "d1_gray_p99",
+        "d1_corr_p99",
+        "d1_bright_energy_mean",
+        "d1_bright_area_ratio",
+        "d1_red_ratio",
+        "d1_hsv_v_p99"
+      ],
+      "gmm_overrides": {
+        "enable_shape_sequence_reject": true
+      }
+    },
+    "GEOM_1_BG_1": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "feature_columns": [
+        "gray_p95",
+        "gray_p99",
+        "corr_p95",
+        "corr_p99",
+        "corr_max",
+        "bright_energy_mean",
+        "bright_area_ratio",
+        "bright_mean",
+        "red_ratio",
+        "rg_ratio",
+        "hsv_v_p95",
+        "hsv_v_p99",
+        "largest_area_ratio",
+        "d1_gray_p99",
+        "d1_corr_p99",
+        "d1_bright_energy_mean",
+        "d1_bright_area_ratio",
+        "d1_red_ratio",
+        "d1_hsv_v_p99",
+        "bg_med",
+        "bg_mad"
+      ],
+      "gmm_overrides": {
+        "enable_shape_sequence_reject": true
+      }
+    },
+    "FEAT_FULL_PLUS_BG": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "feature_columns": [
+        "gray_p95",
+        "gray_p99",
+        "corr_p95",
+        "corr_p99",
+        "corr_max",
+        "bright_energy_mean",
+        "bright_area_ratio",
+        "bright_mean",
+        "red_ratio",
+        "rg_ratio",
+        "hsv_v_p95",
+        "hsv_v_p99",
+        "largest_area_ratio",
+        "d1_gray_p99",
+        "d1_corr_p99",
+        "d1_bright_energy_mean",
+        "d1_bright_area_ratio",
+        "d1_red_ratio",
+        "d1_hsv_v_p99",
+        "bg_med",
+        "bg_mad"
+      ]
+    },
+    "FEAT_NO_BG": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "feature_columns": [
+        "gray_p95",
+        "gray_p99",
+        "corr_p95",
+        "corr_p99",
+        "corr_max",
+        "bright_energy_mean",
+        "bright_area_ratio",
+        "bright_mean",
+        "red_ratio",
+        "rg_ratio",
+        "hsv_v_p95",
+        "hsv_v_p99",
+        "largest_area_ratio",
+        "d1_gray_p99",
+        "d1_corr_p99",
+        "d1_bright_energy_mean",
+        "d1_bright_area_ratio",
+        "d1_red_ratio",
+        "d1_hsv_v_p99"
+      ],
+      "ablation_reference": "FEAT_FULL_PLUS_BG"
+    },
+    "FEAT_GRAY": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "feature_columns": [
+        "gray_p95",
+        "gray_p99"
+      ]
+    },
+    "FEAT_GRAY_BG": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal",
+      "feature_columns": [
+        "gray_p95",
+        "gray_p99",
+        "bg_med",
+        "bg_mad"
+      ]
+    }
+  }
+}

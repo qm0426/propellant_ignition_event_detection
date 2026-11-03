@@ -1,0 +1,43 @@
+{
+  "PELT": {
+    "source": "https://centre-borelli.github.io/ruptures-docs/user-guide/detection/pelt/",
+    "package": "ruptures",
+    "version": "1.1.10",
+    "scope": "generic temporal baseline"
+  },
+  "SORT": {
+    "source": "https://github.com/abewley/sort",
+    "commit": "2236dff5019565958b84df7d871d41cc1db58ac7",
+    "file": "revision_external/sort/sort.py",
+    "sha256": "41d30e3c3cf94079fad57aa67152704a73837cce27257be2890554b5921652b9",
+    "license": "GPL-3.0; retained in author source"
+  },
+  "TrackEval": {
+    "source": "https://github.com/JonathonLuiten/TrackEval",
+    "commit": "12c8791b303e0a0b50f753af204249e622d0281a",
+    "compatibility_patch": "revision_external/TrackEval_compat/numpy_compatibility_patch.json"
+  },
+  "ByteTrack": {
+    "source": "https://github.com/FoundationVision/ByteTrack",
+    "status": "adapter_implemented_requires_author_checkout_and_genuine_scores"
+  },
+  "OCSORT": {
+    "source": "https://github.com/noahcao/OC_SORT",
+    "status": "adapter_implemented_requires_author_checkout_and_genuine_scores"
+  },
+  "ResNet18": {
+    "source": "https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.resnet18.html",
+    "implementation": "torchvision",
+    "initialization": "random_no_download",
+    "requires": "independent development frame-state labels"
+  },
+  "SAS_DoG": {
+    "source": "user task specification section 10, L_LI2023",
+    "reproduction_level": "modality_adapted",
+    "status": "implemented project adaptation; original experimental setting not claimed"
+  },
+  "Prior9": {
+    "status": "blocked",
+    "reason": "original complete specification not supplied; no substitute method is relabelled as Prior9"
+  }
+}

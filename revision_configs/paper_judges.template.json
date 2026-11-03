@@ -1,0 +1,59 @@
+{
+  "output_dir": "inputs/new_comparisons",
+  "protocol_status": "draft_not_frozen",
+  "synthetic": false,
+  "device": "cpu",
+  "seed": 2026,
+  "rois": "comparison_dataset/rois.csv",
+  "labels": "comparison_dataset/fixed_cohort_labels.csv",
+  "track_bundle_id": "legacy_original_tracks",
+  "label_provenance": "effective_trace.xlsx plus explicit manual non-event review; algorithm track identities, not MOT reference IDs",
+  "evaluation_mode": "fixed_roi_original_manual_events",
+  "methods": {
+    "SAS_PAPER_ADAPTED": {
+      "method": "sas_paper",
+      "normalization": "background_ratio",
+      "background_level_unit": null,
+      "pixel_threshold": 1.2,
+      "mean_threshold": 1.2,
+      "area_unit": "px2",
+      "pixels_per_mm": null,
+      "area_threshold": null,
+      "min_run": 1,
+      "rtv": false,
+      "parameter_provenance": "OH-LIF paper structural adaptation; RGB-domain background and area threshold must be development selected"
+    },
+    "DOG_PAPER_ADAPTED": {
+      "method": "dog_paper",
+      "sigmas": [
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      "sigma_ratio": 1.6,
+      "polarity": "bright",
+      "response_threshold": null,
+      "min_run": 1,
+      "rtv": false,
+      "parameter_provenance": "known particle center; unit grayscale, positive bright response divided by k-1; threshold must be development selected"
+    },
+    "CNF_ROI_STAGE_ADAPTED": {
+      "method": "cnf_roi_stage",
+      "mask_mode": "center_component",
+      "normalization": "unit",
+      "mask_polarity": "bright",
+      "mask_threshold": null,
+      "min_low": 3,
+      "min_rise": 3,
+      "min_high": 3,
+      "boundary_step": 1,
+      "min_amplitude": null,
+      "min_slope_per_frame": null,
+      "min_bic_improvement": 10.0,
+      "max_rmse": null,
+      "rtv": false,
+      "parameter_provenance": "our explicit continuous three-stage offline fit; not an unpublished author solver or full YOLO/SAM/ByteTrack reproduction"
+    }
+  }
+}

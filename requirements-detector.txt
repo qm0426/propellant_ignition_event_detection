@@ -1,0 +1,8 @@
+# Install PyTorch 2.5.0 + CUDA 11.8 according to the official platform instructions.
+transformers==4.57.4
+numpy==1.26.4
+Pillow==11.0.0
+accelerate
+timm
+einops
+safetensors

@@ -1,0 +1,39 @@
+{
+  "output_dir": "revision_outputs/real_runs",
+  "synthetic": false,
+  "frames": "revision_inputs/frames.csv",
+  "candidates": "revision_inputs/raw_candidates.csv",
+  "evaluation": {
+    "iou_threshold": 0.5,
+    "mapping_max_distance": null,
+    "mapping_min_shared_frames": null,
+    "mapping_min_purity": null,
+    "tolerances": [
+      1,
+      3
+    ],
+    "duration_s": null
+  },
+  "features": {
+    "difference_policy": "contiguous_zero_boundary",
+    "background_correction": true
+  },
+  "protocol_status": "draft_not_frozen",
+  "reference_boxes": "revision_inputs/reference_boxes.csv",
+  "reference_events": "revision_inputs/reference_events.csv",
+  "detector_mode": "cached",
+  "cleaning": {},
+  "classical": {
+    "log": {
+      "polarity": "dark",
+      "sigmas": null,
+      "response_threshold": null
+    }
+  },
+  "prompts": {
+    "cold": [],
+    "hot": []
+  },
+  "model_path": null,
+  "model_revision": null
+}

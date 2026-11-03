@@ -1,0 +1,20 @@
+{
+  "recording_id": "REPLACE_RECORDING_ID",
+  "tracks_csv": "inputs/tracks.csv",
+  "crop_summary_csv": "inputs/export_summary.csv",
+  "annotation": "inputs/effective_trace.xlsx",
+  "review_book": "inputs/点火测试打标合并.xkj.ga.xlsx",
+  "image_root": "inputs/MCFF0004-N001",
+  "output_dir": "outputs/fpn_ignition_dataset",
+  "roi_padding": 8,
+  "onset_guard_frames": 0,
+  "split_manifest": "inputs/split_manifest.csv",
+  "trust_tracks_for_training": true,
+  "pre_frames": 20,
+  "post_frames": 20,
+  "unknown_policy": "ignore_regions",
+  "confirmed_cold_non_event_tracks": [],
+  "include_non_event_training_frames": false,
+  "split_ranges": [],
+  "purge_cross_split_tracks": true
+}

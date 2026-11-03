@@ -1,0 +1,40 @@
+{
+  "checks": [
+    {
+      "check": "release_0",
+      "returncode": 0
+    },
+    {
+      "check": "release_1",
+      "returncode": 0
+    },
+    {
+      "check": "relocated_units",
+      "returncode": 0
+    },
+    {
+      "check": "relocated_fixture",
+      "returncode": 0
+    },
+    {
+      "check": "relocated_judges",
+      "returncode": 0
+    },
+    {
+      "check": "relocated_assignment",
+      "returncode": 0
+    },
+    {
+      "check": "relocated_plots",
+      "returncode": 0
+    }
+  ],
+  "all_passed": true,
+  "unit_tests_per_run": 21,
+  "core_modules_unmodified": 30,
+  "original_source_hashes_unchanged": true,
+  "relocation_with_spaces_passed": true,
+  "real_cohort_rerun": false,
+  "live_model_or_training_rerun": false,
+  "synthetic_outputs_are_not_real_results": true
+}

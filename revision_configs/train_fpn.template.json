@@ -1,0 +1,32 @@
+{
+  "output_dir": "inputs/new_comparisons",
+  "protocol_status": "draft_not_frozen",
+  "synthetic": false,
+  "device": "cuda",
+  "seed": 2026,
+  "dataset_dir": "comparison_dataset",
+  "allow_draft_labels": false,
+  "split_policy": "recording_disjoint",
+  "temporal_purge_frames": 50,
+  "epochs": 10,
+  "batch_size": 2,
+  "num_workers": 0,
+  "learning_rate": 0.005,
+  "model": {
+    "backbone": "resnet18",
+    "trainable_layers": 5,
+    "anchor_sizes": [
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "min_size": 896,
+    "max_size": 1280,
+    "box_detections_per_img": 300,
+    "box_score_thresh": 0.001,
+    "box_nms_thresh": 0.5,
+    "backbone_weights": null
+  }
+}

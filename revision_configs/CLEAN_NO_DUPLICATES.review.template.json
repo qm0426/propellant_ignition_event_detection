@@ -1,0 +1,74 @@
+{
+  "output_dir": "revision_outputs/real_runs",
+  "synthetic": false,
+  "frames": "revision_inputs/detector_frames.csv",
+  "candidates": "revision_inputs/detector_candidates.csv",
+  "evaluation": {
+    "iou_threshold": 0.5,
+    "mapping_max_distance": 30,
+    "mapping_min_shared_frames": 3,
+    "mapping_min_purity": 0.8,
+    "tolerances": [
+      1,
+      3,
+      5,
+      10
+    ],
+    "duration_s": null
+  },
+  "features": {
+    "difference_policy": "contiguous_zero_boundary",
+    "background_correction": true
+  },
+  "protocol_status": "draft_not_frozen",
+  "reference_boxes": "revision_inputs/detector_boxes.csv",
+  "reference_events": "revision_inputs/reference_events.csv",
+  "detector_mode": "cached",
+  "cleaning": {
+    "disabled_rules": [
+      "duplicates"
+    ]
+  },
+  "classical": {
+    "log": {
+      "polarity": "dark",
+      "intensity_scale": "unit",
+      "sigmas": [
+        2.0,
+        3.0,
+        4.0,
+        6.0,
+        8.0,
+        12.0,
+        16.0,
+        24.0,
+        32.0,
+        48.0
+      ],
+      "response_threshold": 0.02,
+      "nms_iou": 0.3
+    },
+    "mser": {
+      "polarity": "dark",
+      "min_area": 4,
+      "max_area": 4096
+    }
+  },
+  "prompts": {
+    "cold": [],
+    "hot": []
+  },
+  "model_path": null,
+  "model_revision": null,
+  "seed": 2026,
+  "gmm_config": {
+    "random_state": 2026
+  },
+  "available_prompt_groups": [
+    "cold",
+    "hot"
+  ],
+  "selected_method_ids": [
+    "DET_BOTH_cleaned"
+  ]
+}

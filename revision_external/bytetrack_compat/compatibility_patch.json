@@ -1,0 +1,38 @@
+{
+  "upstream_revision": "d1bf0191adff59bc8fcfeaa0b33d3d1642552a99",
+  "patches": [
+    {
+      "file": "basetrack.py",
+      "upstream_sha256": "c938afcf7c516bba4a77155c2499fcae6f926df7a2faa6f73a4be1b073f9bb2d",
+      "patched_sha256": "305131ea660c3c535a1db101085317d981ab57b9db34a9055225385622c2be40",
+      "changes": []
+    },
+    {
+      "file": "byte_tracker.py",
+      "upstream_sha256": "7cecdcdd7998103969a4ba1772f4c9fb5560fd5eef05ca03e0d2df28346ca50b",
+      "patched_sha256": "f2c687e540a0496e1317792cbd978cdd61ab8872a355be5808341cbecade7849",
+      "changes": [
+        "np.float to float for NumPy>=1.24",
+        "absolute yolox imports to isolated relative imports",
+        "matching uses inclusive-IoU NumPy cython_bbox equivalent"
+      ]
+    },
+    {
+      "file": "kalman_filter.py",
+      "upstream_sha256": "9842d0dd9957c97e312d42e5789441add55082066d87cc051ac768143a46eb39",
+      "patched_sha256": "dc88e3b7c75131616e76ff6e5381239d618c8c07c81692002597416cbc24dce5",
+      "changes": []
+    },
+    {
+      "file": "matching.py",
+      "upstream_sha256": "2f54bf0c183f577087391901562ae2bcd3c01633a3e077bd5d4168fafbd899a6",
+      "patched_sha256": "ec5b3f3c80143646b6cc9a7f534f7aa055f8e44e059d781d4f1bc1e3346ea8c3",
+      "changes": [
+        "np.float to float for NumPy>=1.24",
+        "absolute yolox imports to isolated relative imports",
+        "matching uses inclusive-IoU NumPy cython_bbox equivalent"
+      ]
+    }
+  ],
+  "algorithm_changes": "No association/lifecycle/threshold changes; added compatible bbox_overlaps with original inclusive +1 convention"
+}

@@ -1,0 +1,101 @@
+{
+  "upstream_commit": "12c8791b303e0a0b50f753af204249e622d0281a",
+  "change": "Replace removed numpy dtype aliases np.float/np.int/np.bool with identical builtins; no metric/association logic changed",
+  "files": [
+    {
+      "path": "trackeval\\baselines\\stp.py",
+      "original_sha256": "c0a78feafd75511388d3463abbf5fa51418b977fe15dc3488e4570b90de6ae02",
+      "patched_sha256": "5f362bdbef4d1094a34ff11aec05a0cc57d1ae41105538b718652c915d6d8c11"
+    },
+    {
+      "path": "trackeval\\datasets\\bdd100k.py",
+      "original_sha256": "e9d5c62f164185bc996b02c61f54f0cf02c09098a715ed04aa9971d6a8de927d",
+      "patched_sha256": "6238a952e37b1378b4d5b5a7cbae90dc8d48e4c4b82b0f8533f0e15af53e83ad"
+    },
+    {
+      "path": "trackeval\\datasets\\davis.py",
+      "original_sha256": "4c55560bd58892e30a794b68fdf7ecb08dfdb5a1e51a9b85b1ba21fae78eaf90",
+      "patched_sha256": "99177527edadc21c73662f897f8ea39eda15fd1fddb2af30c59e01649b111b2e"
+    },
+    {
+      "path": "trackeval\\datasets\\head_tracking_challenge.py",
+      "original_sha256": "43eaeee7d37a284178c7ff4062c2b9079816669e1adf50cc246fd0b1ee1edba0",
+      "patched_sha256": "c37476497aff78e56a3ff3b53afc737dec02dab7a2827ebc0975e965f007e8ae"
+    },
+    {
+      "path": "trackeval\\datasets\\kitti_2d_box.py",
+      "original_sha256": "050ac54284a982b5ab400ae9f29022370f52df6d6e03566fd8b30a0be7828a97",
+      "patched_sha256": "2399f12341533cebe1cf0a6d434e63bc036e350150223e81a2a2cd9bf4b0a209"
+    },
+    {
+      "path": "trackeval\\datasets\\kitti_mots.py",
+      "original_sha256": "5d62bddeb7713e16107161556f619b58a39e5397c3c6eee0dba965b82cb8ea33",
+      "patched_sha256": "0ee20f5d83e2e9a39f34ebaaf0c99599e176e186658ba9c0e4a3cef2ca7a20b3"
+    },
+    {
+      "path": "trackeval\\datasets\\mots_challenge.py",
+      "original_sha256": "dd310372291fe42f1ba771d39d24e26c424a994f2d98838f910704f64cc636f5",
+      "patched_sha256": "20e295483ff2b8e38fc6930517f08e0910a7d6db3c66c7bef6451c613b660715"
+    },
+    {
+      "path": "trackeval\\datasets\\mot_challenge_2d_box.py",
+      "original_sha256": "d636323991fa30e183acd898d89e26e3be04f8000b56c3f2f45b9940315af54f",
+      "patched_sha256": "706b182257a92fcbbc9a41127abffe31508a9496fe0d39a990204eda36c98ee0"
+    },
+    {
+      "path": "trackeval\\datasets\\person_path_22.py",
+      "original_sha256": "c2d96f176d547bca3a208853bbb7b4cac3b353f85681c66f30a5aaa8e22ed9bb",
+      "patched_sha256": "00879fc095fe31200106e3e7a81b751ea346252c1f0910ba07317ae639f197c2"
+    },
+    {
+      "path": "trackeval\\datasets\\rob_mots.py",
+      "original_sha256": "75756304b69fa7df1cb2c7e8bc505833ed098ed308002d452312083fe4463305",
+      "patched_sha256": "b16fc7efd66e8e67b9fa80adeeb9fd190d5b41663ad78affb5dd23657602541f"
+    },
+    {
+      "path": "trackeval\\datasets\\tao.py",
+      "original_sha256": "82fb49965e30b2d108aecdd38e538d5c0a24bc383ee347e19d2195fd8b3e4f3f",
+      "patched_sha256": "30956cb504a156f8b0cfcfd60a75364f19ccd6b6bb8f0625b7305412918f6b9c"
+    },
+    {
+      "path": "trackeval\\datasets\\tao_ow.py",
+      "original_sha256": "a9854eaebbb0c66a71a4012192f337a808917e09ab7b74cb704cbc0dcc690e39",
+      "patched_sha256": "3869b350b953c5c5e97c487933b40fe3b618984b3c37f8b9e75c63abd997643e"
+    },
+    {
+      "path": "trackeval\\datasets\\youtube_vis.py",
+      "original_sha256": "aa04208b1b7e5fa9018e0066d42be03c0dd68f4bf7dfcb626c85fd7dc52cac2c",
+      "patched_sha256": "3181eb5500f14031438ee70a826058fe66f4db5b64d0befb628ae34f0565b3d1"
+    },
+    {
+      "path": "trackeval\\datasets\\burst_helpers\\burst_base.py",
+      "original_sha256": "3c26ec13526e3d20f55668791c85bb1e0897a94dcdca57682a97d292f2269beb",
+      "patched_sha256": "43a26d574bec420e1bc7df7e5be65dc3ba9a5217da0516971648afa6afee7914"
+    },
+    {
+      "path": "trackeval\\datasets\\burst_helpers\\burst_ow_base.py",
+      "original_sha256": "8796604d9251062ee77627c03eec258bdcb6b2aeec317cc0336ef7257637ba3f",
+      "patched_sha256": "b798dd64158b18d041e2c5d4a97a227576b8388d335e7cf40e7018727db70204"
+    },
+    {
+      "path": "trackeval\\metrics\\hota.py",
+      "original_sha256": "c582255c3d36bdb49c3ceeb2a5bd912cee009190dfcfe465b4173d03aaa97d6a",
+      "patched_sha256": "bf85a9e4f2270fb3a52f94b05382250f4b8804a39a897ea9dfbf97ff85bf331e"
+    },
+    {
+      "path": "trackeval\\metrics\\identity.py",
+      "original_sha256": "e76b1bdcbf5b193662431596a984cf70a5be32e903eb5f2a3d9921b4762f93ba",
+      "patched_sha256": "33b4ef7e11a24c47c6060eb2464cb92167aea42e8c0e6f652b10ca317872028c"
+    },
+    {
+      "path": "trackeval\\metrics\\j_and_f.py",
+      "original_sha256": "9872e658209634e5b07cb080c43308073d65fa32003c9285ecbdf2e60898dccc",
+      "patched_sha256": "5975dbdec07d89d5349a8f4c663d2d3245d67e8eaa323f6585596f33842f3433"
+    },
+    {
+      "path": "trackeval\\metrics\\track_map.py",
+      "original_sha256": "492b588ca63d1adce96530f914239530fac1b018e5a2c603f036a3337d9aefb0",
+      "patched_sha256": "bb708c0c16e1a18b4c03c09b3eeab1e887f1f03318b72ab85366b6cd8a0d46c6"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+# Preserve exact source bytes because author/compatibility manifests verify SHA256.
+* -text
