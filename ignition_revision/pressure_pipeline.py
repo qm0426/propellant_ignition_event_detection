@@ -1,11 +1,11 @@
 """Resumable image -> LocateAnything -> original cleaning -> tracker -> judges.
 
-GT is optional and is only read by explicit evaluation after prediction.
+Prediction only: no reference labels, comparison methods or ablation runners are used.
 The detector may run in its own existing conda environment via subprocess.
 """
 from pathlib import Path
 from contextlib import contextmanager
-import argparse,copy,importlib.util,json,re,subprocess,sys,time,traceback
+import argparse, copy, importlib.util, json, re, subprocess, sys, time
 import numpy as np
 import pandas as pd
 from PIL import Image
@@ -81,7 +81,7 @@ def detector_worker(job):
         print(f'DETECT {i}/{len(frames)} frame={f.frame_idx} boxes={len(boxes)}',flush=True)
 
 def acquire(cfg,frames,out,key):
-    from .labelme_review import read_pixel_boxes
+    from .box_io import read_pixel_boxes
     from .detection import BOX_COLUMNS,validate_candidates
     det=cfg.get('detector',{});mode=det.get('mode','live');rows=[];invalid_rows=[]
     if mode=='live':
@@ -89,7 +89,7 @@ def acquire(cfg,frames,out,key):
         if not local_model.is_dir():raise ValueError('Use an existing local model snapshot directory; no implicit download')
         job={'detector_script':str(script),'detector':det,'frames':str(out/'frames.csv'),'directory':str(out/'01_detection/per_frame'),'key':key}
         jobfile=out/'01_detection/worker_job.json';write_json(jobfile,job)
-        command=[det.get('python',sys.executable),str(Path(__file__).resolve().parents[1]/'run_pressure_pipeline.py'),'--worker',str(jobfile)]
+        command=[det.get('python') or sys.executable,str(Path(__file__).resolve().parents[1]/'run_pressure_pipeline.py'),'--worker',str(jobfile)]
         subprocess.run(command,check=True,cwd=cfg['project_root'])
     elif mode!='cached_txt':raise ValueError('detector.mode must be live or cached_txt')
     for f in frames.itertuples():
@@ -114,11 +114,12 @@ def acquire(cfg,frames,out,key):
 
 def run_pipeline(cfg,start='detect',stop='judge',resume=False,dry_run=False):
     if cfg.get('methods')!={'GMM_RTV':{'method':'gmm','rtv':True,'candidate_policy':'first_terminal'}}:
-        raise ValueError('This entry point runs only the original GMM_RTV method; use run_hmm_comparison.py for experiments')
+        raise ValueError('This entry point runs only the nominal GMM_RTV method')
     if cfg.get('tracker',{}).get('backend','ot')!='ot':raise ValueError('The original-method entry point requires OT association')
     cfg=copy.deepcopy(cfg);out=resolve(cfg,cfg['output_dir']);frames=frame_manifest(cfg)
     legacy=resolve(cfg,cfg['legacy_root']);upstream=resolve(cfg,cfg['upstream_root'])
-    sources=[upstream/'test_locate_anything.py',upstream/'postprocess_detection_txt_modified.py',legacy/'ot_kalman_tracker.py',legacy/'ignition_detection_gmm_rtv_new.py']
+    detector_source=resolve(cfg,cfg.get('detector',{}).get('script',str(upstream/'locate_anything.py')))
+    sources=[detector_source,upstream/'postprocess_detection_txt_modified.py',legacy/'ot_kalman_tracker.py',legacy/'ignition_detection_gmm_rtv_new.py']
     hashes={str(p):file_hash(p) for p in sources}
     hashes.update({str(p):file_hash(p) for p in Path(__file__).parent.glob('*.py')})
     external={}
@@ -166,19 +167,22 @@ def run_pipeline(cfg,start='detect',stop='judge',resume=False,dry_run=False):
                     write_csv(destinations[stage],cleaned);write_csv(directory/'cleaning_audit.csv',audit)
                 elif stage=='track':
                     from .tracking import run_custom,crop_observations
-                    from .experiments import export_mot
+                    from .outputs import export_mot
                     variant={**cfg.get('tracker',{}),'id':'PRESSURE_TRACKS'}
-                    if variant.get('backend','ot') not in ('ot','hungarian'):raise ValueError('Choose ot or hungarian')
+                    if variant.get('backend','ot')!='ot':raise ValueError('Only OT association is included')
                     obs,trace=run_custom(pd.read_csv(destinations['clean'],low_memory=False),frames,cfg,variant,run)
                     write_csv(directory/'track_observations.csv',obs);write_csv(directory/'association_trace.csv',trace);export_mot(obs,directory)
-                    rois=crop_observations(obs,frames,cfg,directory);write_csv(destinations[stage],rois)
+                    rois=crop_observations(obs,frames,cfg,directory)
+                    rois=rois.merge(obs[['recording_id','track_id','frame_idx','cx','cy','x1','y1','x2','y2']],
+                                    on=['recording_id','track_id','frame_idx'],how='left',validate='one_to_one')
+                    write_csv(destinations[stage],rois)
                     compat=obs.rename(columns={'frame_idx':'frame_id'}).copy()
                     lookup=dict(zip(frames.frame_idx,frames.image_path))
                     compat['image_name']=[Path(lookup[f]).stem for f in compat.frame_id]
                     write_csv(out/'tracks.csv',compat)
                 else:
                     from .judges import extract_track_features
-                    from .experiments import predict_feature_bundle,evaluate_tracking_observations
+                    from .prediction import predict_feature_bundle
                     rois=pd.read_csv(destinations['track'],low_memory=False)
                     if rois.empty:
                         write_csv(destinations[stage],[],['recording_id','track_id','method_id','has_ignition','onset_frame','confirmation_frame'])
@@ -187,17 +191,6 @@ def run_pipeline(cfg,start='detect',stop='judge',resume=False,dry_run=False):
                         predictions=predict_feature_bundle(bundle,mod,base,cfg['methods'],cfg,run)
                         if set(predictions)!=set(cfg['methods']):raise RuntimeError('Some judges failed; inspect method error.json')
                         write_csv(destinations[stage],pd.concat(predictions.values(),ignore_index=True))
-                        # Both reference files are necessary. Prediction works without any GT.
-                        if cfg.get('reference_boxes') or cfg.get('reference_events'):
-                            if not (cfg.get('reference_boxes') and cfg.get('reference_events')):raise ValueError('Evaluation requires both reference_boxes and reference_events')
-                            obs=pd.read_csv(out/'03_tracking/track_observations.csv',low_memory=False)
-                            metrics=[]
-                            for method,pred in predictions.items():
-                                target=directory/method;target.mkdir(exist_ok=True)
-                                score,_,reason=evaluate_tracking_observations(obs,pred,{**cfg,'frames':str(out/'frames.csv')},run,target)
-                                if reason:raise ValueError(reason)
-                                metrics.append({'method_id':method,**score})
-                            write_csv(directory/'event_metrics.csv',metrics)
             outputs={str(p.relative_to(out)):file_hash(p) for p in directory.rglob('*') if p.is_file()}
             if stage=='track':outputs['tracks.csv']=file_hash(out/'tracks.csv')
             state[stage]={'status':'completed','outputs':outputs};write_json(statefile,state)

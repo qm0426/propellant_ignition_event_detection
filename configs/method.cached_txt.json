@@ -1,0 +1,47 @@
+{
+  "project_root": ".",
+  "image_dir": "inputs/frames",
+  "recording_id": "RECORDING_01",
+  "output_dir": "outputs/recording_01_cached",
+  "frame_regex": "_(?P<frame>\\d+)$",
+  "frame_offset": 0,
+  "start_frame": 0,
+  "end_frame": null,
+  "require_contiguous_frames": true,
+  "upstream_root": "method_core",
+  "legacy_root": "method_core",
+  "detector": {
+    "mode": "cached_txt",
+    "txt_dir": "inputs/detections_txt"
+  },
+  "cleaning": {},
+  "tracker": {
+    "backend": "ot",
+    "rescue": true,
+    "restoration": {
+      "gap": true,
+      "prebirth": true
+    }
+  },
+  "tracking": {},
+  "restoration": {
+    "max_gap_fill": 10,
+    "prebirth_settings": {}
+  },
+  "time_advance_policy": "incremental_state_frame_v1",
+  "crop_padding": 0,
+  "virtual_tracking_rois": true,
+  "gmm_config": {
+    "random_state": 2026
+  },
+  "methods": {
+    "GMM_RTV": {
+      "method": "gmm",
+      "rtv": true,
+      "candidate_policy": "first_terminal"
+    }
+  },
+  "image_extensions": [
+    ".png"
+  ]
+}

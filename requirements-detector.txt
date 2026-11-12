@@ -1,7 +1,6 @@
-# Install PyTorch 2.5.0 + CUDA 11.8 according to the official platform instructions.
+# Additional live LocateAnything dependencies; cached-box mode does not need these.
+# Install PyTorch separately for the intended CUDA environment.
 transformers==4.57.4
-numpy==1.26.4
-Pillow==11.0.0
 accelerate
 timm
 einops

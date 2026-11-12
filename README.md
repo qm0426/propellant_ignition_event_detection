@@ -1,79 +1,84 @@
-# Dense-particle optical event extraction — reviewer source snapshot
+# Trajectory-resolved optical-event detection
 
-This repository contains the original-method pipeline and the review comparisons/ablations. It excludes recordings, confidential labels, model weights and generated scientific results. All paths below are relative to this checkout; run commands from the checkout root.
+Method implementation for multi-particle imaging:
 
-## Install and check
+**LocateAnything → candidate cleaning → OT–Kalman association with Rescue, Gap and Prebirth → ROI features → GMM–RTV event judgment.**
 
-Use Python 3.10 or 3.11 in a separate environment. Install `requirements-core.txt`. For native trackers install the dependencies required by their preserved upstream files. For FPN install PyTorch 2.3.1/CUDA 11.8 with torchvision 0.18.1. For live LocateAnything use a **separate** environment with PyTorch 2.5.0/CUDA 11.8 and `requirements-detector.txt`; install the local model's own requirements as well. The dependency lists describe the known setup, not a complete transitive lock file.
+[中文完整运行说明](README_中文.md)
 
-```
+This repository contains the method only. It does not require reference labels and does not include comparison algorithms, ablation runners, FPN training/inference, annotation websites, paper plotting or evaluation metrics. Raw images and model weights are supplied separately. Outputs describe particle-associated visible optical transitions; onset positions are image-plane trajectory ROI locations.
+
+## Setup
+
+Python 3.10 is recommended. Install the CPU pipeline dependencies:
+
+```console
 python -m pip install -r requirements-core.txt
-python -m unittest tests.revision.test_hmm_pressure tests.revision.test_log_detector tests.revision.test_mot_adaptations tests.revision.test_joint_validation
-python -m tests.revision.make_synthetic_fixture --output outputs/synthetic_check
-python -m ignition_revision judges --config outputs/synthetic_check/judges.json
 ```
 
-Synthetic data are explicitly marked and must never be reported as real experimental validation.
+Live detection additionally requires the existing LocateAnything-compatible PyTorch/Transformers environment and a local LocateAnything-3B model snapshot. Additional dependencies are listed in `requirements-detector.txt`; install PyTorch appropriate to your CUDA environment separately. Cached-box processing does not import Torch or Transformers. Set `detector.python` to use a separate detection environment, or leave it `null` for the current interpreter.
 
-## Original method on a new recording
+## Inputs and execution
 
-Copy `revision_configs/pressure_pipeline.template.json` to a working config. Fill in image directory, physical-frame filename rule, recording ID, model directory and detector-environment Python executable. If multiple image formats contain duplicate frame numbers, select `image_extensions` (for example `[".bmp"]`) deliberately rather than discarding duplicates silently. Relative paths resolve from this checkout.
+1. Supply consecutive full-resolution 8-bit RGB, RGBA or grayscale frames of identical dimensions. Set the filename regex and image extension in the configuration. The default regex extracts the trailing `_00000000` frame number. Internal frames use zero-based global recording indices.
+2. Copy and edit `configs/method.template.json`: set `image_dir`, `output_dir`, `recording_id`, `image_extensions` and `detector.model`.
+3. Run:
 
-```
-python run_pressure_pipeline.py --config revision_configs/pressure_pipeline.my_recording.json --dry-run
-python run_pressure_pipeline.py --config revision_configs/pressure_pipeline.my_recording.json
-python run_pressure_pipeline.py --config revision_configs/pressure_pipeline.my_recording.json --resume
-```
-
-The stages are open-vocabulary detection, box postprocessing, OT–Kalman tracking, Rescue/Gap/Prebirth support, ROI extraction and GMM–RTV event judgment. HMM is not inserted into this pipeline. Source/input fingerprints guard resume; changing source/config may require a new output directory. No GT is needed for prediction, but human reference data are required for performance claims.
-
-## Independent and combined experiments
-
-Fill the relevant `revision_configs/*.template.json` inputs. The templates intentionally require evidence/provenance and do not silently manufacture real GT or declare a protocol frozen. `run_submission_suite.py` selects run blocks; each block can contain one or multiple named methods/variants. Duplicate a block with a new ID and a one-method config to schedule any individual ablation separately.
-
-```
-python -m ignition_revision assignment --config revision_configs/assignment.my.json
-python -m ignition_revision restoration --config revision_configs/restoration.my.json
-python -m ignition_revision judges --config revision_configs/judges.my.json
-python -m ignition_revision ablations --config revision_configs/ablations.my.json
-python run_hmm_comparison.py --config revision_configs/judges.my.json --output outputs/hmm
-python run_submission_suite.py --suite revision_configs/suite.my.json --only judges ablations
-python run_submission_suite.py --suite revision_configs/suite.my.json --disable detection --resume
-python run_submission_suite.py --suite revision_configs/suite.my.json
+```console
+python run_method.py --config configs/method.template.json
 ```
 
-Change each suite block's config filename to your filled config before execution. `--dry-run` lists plans; it is not a data-validity or scientific-result check. The suite records exit codes and never treats a blocked run as completed.
+All relative paths are resolved against the repository root. `run_pressure_pipeline.py` is an equivalent entry point.
 
-## FPN train, inference and plotting
+To reuse saved detections, edit `configs/method.cached_txt.json` and run:
 
-```
-python build_ignition_dataset.py --help
-python train_fpn_revision.py --config revision_configs/train_fpn_ignition.my.json
-python infer_fpn_revision.py --config revision_configs/infer_fpn_ignition.my.json
-python run_fpn_ignition_pipeline.py --config revision_configs/fpn_ignition_pipeline.my.json
-python plot_revision_results.py --help
-python plot_review_v2_results.py --help
+```console
+python run_method.py --config configs/method.cached_txt.json
 ```
 
-Training/inference remain independent and are not accidentally triggered by the core suite. Select validation/test records explicitly in their dataset configuration. `plot_revision_results.py` reads individual family outputs; `plot_review_v2_results.py` reads historical review-v2 registry outputs, not the new minimal suite status file. Do not interchange these interfaces. Consult each command's `--help` for exact plotting arguments.
+Provide one TXT per image with the same stem. Each line is `label x1 y1 x2 y2` in original-image pixel coordinates. Empty files represent no detections; missing files are errors. A sixth column is accepted but not interpreted as native detection confidence. This mode imports boxes at the `detect` stage and then runs the remaining stages normally.
 
-## Main source map
+## Stages and resuming
 
-| Source | Experiment/function |
+```console
+python run_method.py --config configs/method.template.json --dry-run
+python run_method.py --config configs/method.template.json --stop-after detect
+python run_method.py --config configs/method.template.json --start-from clean --resume
+python run_method.py --config configs/method.template.json --resume
+```
+
+Stages are `detect`, `clean`, `track`, `judge`. Earlier stages must already be complete to use `--start-from`. Per-stage checksums and per-frame detector checkpoints protect resuming. Changing inputs, configuration or code requires a new output directory. Use a fresh directory for this packaged version rather than reusing the source-hash lock of the original project.
+
+The templates retain the working nominal configuration, including all three restoration strategies, seed 2026, incremental Kalman state timestamps, contiguous-frame difference features and the first-terminal GMM candidate with OR-RTV. Resolved default parameters are in `docs/nominal_parameters.json` and each run's effective configuration files. Feature normalization uses the entire trajectory; this is an offline method.
+
+## Outputs
+
+| Path under `output_dir` | Contents |
 |---|---|
-| test_locate_anything.py / postprocess_detection_txt_modified.py | VLM detection and original box cleaning |
-| ignition_revision/detection.py | cached detection evaluation, cleaning ablation, LoG/MSER |
-| ignition_revision/tracking.py, experiments.py | OT/Hungarian and R/G/P factorial experiments |
-| ignition_revision/recovery.py | gap/prebirth support |
-| ignition_revision/mot_adapters.py, mot_metrics.py | SORT/OC-SORT/quality-adapted ByteTrack and formal MOT metrics |
-| ignition_revision/judges.py, hmm.py | GMM/HMM and decision integration |
-| ignition_revision/paper_judges.py, prior9.py | SAS/DoG/stage and K-means prior-9 adaptations |
-| ignition_revision/roi_io.py | original ROI features and physical-frame continuity |
-| ignition_revision/experiments.py | decision-screen and feature ablations |
-| ignition_revision/evaluation.py | identity-aware event matching and timing tolerance |
-| ignition_revision/ignition_dataset.py, fpn_detector.py, fpn_events.py | full-frame single-class FPN dataset/train/infer and supplied-track event attribution |
-| ignition_revision/pressure_pipeline.py | original method's combined new-recording pipeline |
-| latest_experiment_scripts_20261018/ | historical 12-script scientific implementation used by compatibility loaders |
-| prompt_sensitivity_tools/ | prompt sensitivity experiment and evaluation |
+| `frames.csv`, `pipeline_config.json`, `pipeline_status.json` | Input manifest, fingerprints and stage status |
+| `source_snapshot/` | Core source snapshot used in the run |
+| `01_detection/raw_candidates.csv` | Raw candidates; live mode also writes `per_frame/` JSON/TXT |
+| `02_cleaning/candidates.csv`, `cleaning_audit.csv` | Retained boxes and cleaning provenance |
+| `03_tracking/track_observations.csv`, `association_trace.csv` | Observations, identities, observation sources and association trace |
+| `03_tracking/roi_manifest.csv` | Original images, crop bounds and global ROI positions |
+| `tracks.csv` | Compatibility table using the `frame_id` column |
+| `03_tracking/motchallenge/` | Format export only, with global frame +1; no identity metrics |
+| `04_judgment/events.csv` | All tracks, including negative judgments |
+| `04_judgment/GMM_RTV/` | Predictions, candidate audit, RTV channels and diagnostic traces |
+| `runtime_summary.csv` | Stage and nested operation timings; overlapping totals must not be summed |
 
-See `docs/INPUTS_OUTPUTS.md`, `docs/REPRODUCIBILITY.md`, `docs/KNOWN_LIMITS.md`, `NOTICE.md` and `SOURCE_MANIFEST.json`. This package is locally prepared for review; it has not been published to a remote repository.
+Filter `events.csv` by `has_ignition=True` for predicted events. `onset_frame` and `confirmation_frame` denote the estimated optical onset and subsequent confirmation frame. `onset_cx/cy` and `onset_x1/y1/x2/y2` refer to the original image coordinates of the supporting trajectory ROI. Restored positions are not independently measured particle contours. Sources distinguish `detector_primary`, `detector_rescue`, `gap_roi` and `prebirth_roi`. `native_score` remains empty when no native detector confidence is available.
+
+## Implementation map
+
+`method_core/` contains the selected reachable definitions of the four working method modules: detector, box cleaning, OT–Kalman/restoration and ROI/GMM features. `ignition_revision/` provides frame validation, orchestration, ROI reading, nominal GMM–RTV judgment and result exports. `SOURCE_MANIFEST.json` records the original source hashes and packaging changes. Algorithm alternatives and experiment orchestration have been removed.
+
+## Verification
+
+```console
+python -m unittest discover -s tests -v
+```
+
+Generated fixtures check the cached-box pipeline, empty inputs, frame validation, incremental filter time, raw-feature RTV, coordinate exports and checksum-protected resuming. A one-time parity check against the working implementation confirmed identical cleaning, tracking including a gap, features, GMM candidates, RTV and judgments on the same fixture. These checks are software verification, not scientific experiment results. The live GPU model was not rerun during packaging; its selected source definitions and prompts were retained. See `VERIFICATION.json`.
+
+See `NOTICE.md` for license status and third-party model notices.

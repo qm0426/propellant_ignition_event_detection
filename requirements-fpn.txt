@@ -1,3 +1,0 @@
-# Historical FPN environment: torch==2.3.1+cu118, torchvision==0.18.1+cu118.
-# Install these with the official PyTorch CUDA wheel index, separately from the detector environment.
--r requirements-core.txt

@@ -1,8 +1,12 @@
-# Submission and third-party notices
+# License and model notices
 
-This is a local reviewer-submission source snapshot, not a claim of public hosting.
-The authors must choose their own license and complete author/repository metadata before public release.
-No new license is granted for author code by this packaging operation.
-Third-party files retain their original licenses; in particular inspect SORT's GPL license and the license files under revision_external before redistributing or combining code.
-LocateAnything weights, raw recordings, human annotations and trained checkpoints are not redistributed.
-Third-party upstream revisions and compatibility patches are recorded in the included manifests. A copied path default does not change a scientific rule.
+This repository packages the authors' method implementation. The authors have not
+yet selected a public software license; no new license is granted by this
+packaging operation.
+
+LocateAnything is loaded from a separately supplied local model snapshot. Its
+model, processor, remote implementation and weights remain subject to their
+upstream terms. They are not redistributed here. External Python dependencies
+retain their respective licenses.
+
+Raw recordings, human annotations and model checkpoints are not included.

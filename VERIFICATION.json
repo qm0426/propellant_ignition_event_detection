@@ -1,40 +1,26 @@
 {
-  "checks": [
-    {
-      "check": "release_0",
-      "returncode": 0
-    },
-    {
-      "check": "release_1",
-      "returncode": 0
-    },
-    {
-      "check": "relocated_units",
-      "returncode": 0
-    },
-    {
-      "check": "relocated_fixture",
-      "returncode": 0
-    },
-    {
-      "check": "relocated_judges",
-      "returncode": 0
-    },
-    {
-      "check": "relocated_assignment",
-      "returncode": 0
-    },
-    {
-      "check": "relocated_plots",
-      "returncode": 0
-    }
+  "fixture": "Generated implementation fixture only; not experimental evidence",
+  "comparisons": [
+    "Nominal box cleaning: identical candidate rows and metrics",
+    "OT/Kalman, restoration and association trace: identical observations and trace",
+    "Raw/difference features, GMM candidates, RTV, decision and audit: identical"
   ],
-  "all_passed": true,
-  "unit_tests_per_run": 21,
-  "core_modules_unmodified": 30,
-  "original_source_hashes_unchanged": true,
-  "relocation_with_spaces_passed": true,
-  "real_cohort_rerun": false,
-  "live_model_or_training_rerun": false,
-  "synthetic_outputs_are_not_real_results": true
+  "fixture_observations": 21,
+  "fixture_sources": {
+    "detector_primary": 19,
+    "gap_roi": 2
+  },
+  "status": "passed",
+  "live_detector": "Not rerun; selected source definitions retained from working detector",
+  "software_tests": 6,
+  "python": "3.10.0 | packaged by conda-forge | (default, Nov 10 2021, 13:20:59) [MSC v.1916 64 bit (AMD64)]",
+  "packages": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "scipy": "1.13.1",
+    "scikit-learn": "1.5.0",
+    "opencv-python": "4.10.0.82",
+    "Pillow": "10.2.0"
+  },
+  "date": "2026-11-12"
 }

@@ -1,7 +1,6 @@
 """One ROI reader for stored crops and virtual crops in original frame coordinates."""
 from PIL import Image
 import numpy as np
-from pathlib import Path
 from functools import lru_cache
 from .common import resolve
 

@@ -1,8 +1,0 @@
-{
-  "files": {
-    "association.py": "c009a78eaa1c35c1d61217506255051ba882a7b99f9505cdec64da474ff0fbd7",
-    "kalmanfilter.py": "165a2d5243f2b874e37d3a3ae8112402f5c53ddfb6eb6e2cddda3311c3a2cded",
-    "ocsort.py": "122cc1c27d3321eac0debdf3ba782b76d189e1ac878256b8291ffeb4314fa979"
-  },
-  "upstream_manifest": "revision_experiments_34569_20261018\\revision_external\\ocsort\\upstream_manifest.json"
-}

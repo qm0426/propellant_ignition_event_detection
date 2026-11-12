@@ -1,11 +1,15 @@
 __pycache__/
-*.pyc
+*.py[cod]
+.pytest_cache/
 .venv*/
 inputs/
 outputs/
+models/
 revision_outputs/
 *.pt
 *.pth
 *.safetensors
 *.mp4
 *.log
+.env
+configs/*.local.json
